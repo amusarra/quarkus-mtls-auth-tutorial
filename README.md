@@ -122,6 +122,15 @@ You can run your application in dev mode that enables live coding using:
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 
+> **_WARNING:_**  with the current configuration of the application, it's listening only on HTTPS port 8443. You need to configure your browser to accept the self-signed certificate used by the server. The Dev UI is available at <https://localhost:8443/q/dev/>.
+
+> **_NOTE on Certificate_**: when run phase compile process, Maven will generate a self-signed CA and Server certificate in `src/main/resources/certs` directory and start the download TSL process updater and create a PEM bundle in default directory `/tmp/tsl-it`. Without the TSL bundle, the application will not start.
+
+Below is an asciinema recording of the application running in dev mode.
+
+
+[![asciicast](https://asciinema.org/a/AXCFc2ugDJTISRU6SG86l5Ihg.svg)](https://asciinema.org/a/AXCFc2ugDJTISRU6SG86l5Ihg)
+
 ## Packaging and running the application
 
 The application can be packaged using:
