@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-package it.dontesta.quarkus.tls.auth.certificate.etsi.gov;
+package it.dontesta.quarkus.tls.auth.ws.certificate.etsi.gov;
 
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-package it.dontesta.quarkus.tls.auth.certificate.etsi.gov;
+package it.dontesta.quarkus.tls.auth.ws.certificate.etsi.gov;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
