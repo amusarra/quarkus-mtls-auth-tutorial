@@ -34,7 +34,7 @@ check_uuidgen_installed() {
 # Function to check OpenSSL version
 # @param REQUIRED_VERSION: The required OpenSSL version
 check_openssl_version() {
-  local REQUIRED_VERSION="3.3.1"
+  local REQUIRED_VERSION="3.0.7"
   local current_version=$(openssl version | awk '{print $2}')
 
   if version_ge "$current_version" "$REQUIRED_VERSION"; then
@@ -56,6 +56,20 @@ check_xidel_installed() {
     echo -e "${BLUE}OpenSUSE:${NC} sudo zypper install xidel"
     echo -e "${BLUE}macOS (using Homebrew):${NC} brew install xidel"
     echo -e "${BLUE}Other distributions:${NC} Download from https://github.com/benibela/xidel/releases"
+    exit 1
+  fi
+}
+
+# Function to check if xmlstarlet is installed
+check_xmlstarlet_installed() {
+  if ! command -v xmlstarlet &>/dev/null; then
+    print_msg "${RED}" "❌ xmlstarlet is not installed."
+    print_msg "${YELLOW}" "To install xmlstarlet, use the following command based on your distribution:"
+    print_msg "${BLUE}" "Debian/Ubuntu: sudo apt-get install xmlstarlet"
+    print_msg "${BLUE}" "Fedora: sudo dnf install xmlstarlet"
+    print_msg "${BLUE}" "CentOS/RHEL: sudo yum install xmlstarlet"
+    print_msg "${BLUE}" "Arch Linux: sudo pacman -S xmlstarlet"
+    print_msg "${BLUE}" "macOS (using Homebrew): brew install xmlstarlet"
     exit 1
   fi
 }

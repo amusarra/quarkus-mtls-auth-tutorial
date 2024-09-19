@@ -18,7 +18,7 @@
 #   --help                          Show this help message
 #
 # Dependencies:
-#   - xidel
+#   - xmlstarlet
 #   - curl
 #   - openssl
 #
@@ -169,7 +169,7 @@ parse_and_save_certs() {
 
   # Extract certificates from the XML content using xidel
   local certs
-  certs=$(xidel --xpath "//ServiceInformation[ServiceTypeIdentifier='http://uri.etsi.org/TrstSvc/Svctype/IdV' and ServiceStatus='http://uri.etsi.org/TrstSvc/TrustedList/Svcstatus/recognisedatnationallevel']//X509Certificate" "${XML_OUTPUT_FILE}")
+  certs=$(xmlstarlet sel -T -t -m '//_:ServiceInformation[_:ServiceTypeIdentifier="http://uri.etsi.org/TrstSvc/Svctype/IdV" and _:ServiceStatus="http://uri.etsi.org/TrstSvc/TrustedList/Svcstatus/recognisedatnationallevel"]//_:X509Certificate' -v 'text()' -nl "${XML_OUTPUT_FILE}")
 
   # Check if the XPath found any nodes
   if [ -z "${certs}" ]; then
@@ -262,9 +262,16 @@ done
 
 # Main function
 main() {
-  print_msg "${YELLOW}" "🚀 Starting certificate update process"
+  print_msg "${YELLOW}" "🚀 Starting the TSL-IT certificate update process"
+
+  # Check if the PEM bundle file already exists
+  if [ -f "${OUTPUT_PATH_PEM_BUNDLE}/${OUTPUT_PEM_BUNDLE_FILE_NAME}" ]; then
+    print_msg "${GREEN}" "✅ PEM bundle file already exists at ${OUTPUT_PATH_PEM_BUNDLE}/${OUTPUT_PEM_BUNDLE_FILE_NAME}. Skipping generation."
+    exit 0
+  fi
+
   check_keytool_installed
-  check_xidel_installed
+  check_xmlstarlet_installed
   check_curl_installed
   mkdir -p "${OUTPUT_PATH_PEM_BUNDLE}"
 
